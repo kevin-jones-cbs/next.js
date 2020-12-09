@@ -651,13 +651,16 @@ export default class Router implements BaseRouter {
       this.abortComponentLoad(this._inFlightRoute)
     }
 
-    as = addBasePath(
-      addLocale(
-        hasBasePath(as) ? delBasePath(as) : as,
-        options.locale,
-        this.defaultLocale
+    if (process.env.__NEXT_I18N_SUPPORT) {
+      as = addBasePath(
+        addLocale(
+          hasBasePath(as) ? delBasePath(as) : as,
+          options.locale,
+          this.defaultLocale
+        )
       )
-    )
+    }
+    
     const cleanedAs = delLocale(
       hasBasePath(as) ? delBasePath(as) : as,
       this.locale
